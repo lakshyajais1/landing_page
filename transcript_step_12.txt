@@ -1,0 +1,95 @@
+Created At: 2026-05-22T07:52:55Z
+Completed At: 2026-05-22T07:52:55Z
+File Path: `file:///Users/ayannarayan/Website/src/PixeoGallery.css`
+Total Lines: 180
+Total Bytes: 6815
+Showing lines 1 to 180
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Mono:wght@300;400;500&display=swap');
+2: 
+3: /* ════════════════════════════════════════════════════════════════════
+4:    Pixeo "Into the Pixeo" 3D scroll gallery — scoped so it can be embedded
+5:    as one section inside the Pixeo product page without leaking styles.
+6:    ════════════════════════════════════════════════════════════════════ */
+7: 
+8: .pixeo-gallery{
+9:   --pg-bg:        #050308;
+10:   --pg-ink:       #f4f1f8;
+11:   --pg-muted:     #8c849c;
+12:   --pg-accent:    #6b54ff;
+13:   --pg-accent-2:  #b06bff;
+14: 
+15:   position: relative;
+16:   color: var(--pg-ink);
+17:   background:
+18:     radial-gradient(1200px 800px at 78% 12%, rgba(107,84,255,.16), transparent 60%),
+19:     radial-gradient(1000px 700px at 12% 88%, rgba(176,107,255,.12), transparent 60%),
+20:     var(--pg-bg);
+21: }
+22: 
+23: /* The viewport-tall stage stays pinned while the section scrolls past it. */
+24: .pg-stage-wrap{
+25:   position: sticky;
+26:   top: 0;
+27:   height: 100vh;
+28:   overflow: hidden;
+29: }
+30: 
+31: /* ---- Fixed starfield background ---------------------------------------- */
+32: .pg-starfield{
+33:   position:absolute; inset:0; z-index:0; pointer-events:none;
+34:   background:
+35:     radial-gradient(1.4px
+<truncated 4030 bytes>
+1: }
+132: .pg-hero h1 em{
+133:   font-style:normal;
+134:   background:linear-gradient(135deg, var(--pg-ink) 0%, var(--pg-accent-2) 50%, var(--pg-accent) 100%);
+135:   -webkit-background-clip:text;
+136:   background-clip:text;
+137:   -webkit-text-fill-color:transparent;
+138:   color:transparent;
+139: }
+140: .pg-hero p{
+141:   margin-top:18px;
+142:   font-family:"DM Mono", ui-monospace, monospace;
+143:   font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:var(--pg-muted);
+144: }
+145: 
+146: .pg-scroll-hint{
+147:   position:absolute; left:50%; bottom:34px; transform:translateX(-50%);
+148:   z-index:21;
+149:   font-family:"DM Mono", ui-monospace, monospace;
+150:   font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--pg-muted);
+151:   display:flex; flex-direction:column; align-items:center; gap:10px;
+152:   transition:opacity .4s;
+153: }
+154: .pg-bar{
+155:   width:1px; height:38px;
+156:   background:linear-gradient(var(--pg-muted), transparent);
+157:   animation:pg-drop 1.8s ease-in-out infinite;
+158: }
+159: @keyframes pg-drop{
+160:   0%{ transform:scaleY(0); transform-origin:top }
+161:   50%{ transform:scaleY(1); transform-origin:top }
+162:   50.01%{ transform-origin:bottom }
+163:   100%{ transform:scaleY(0); transform-origin:bottom }
+164: }
+165: 
+166: /* ---- Progress rail ----------------------------------------------------- */
+167: .pg-progress{
+168:   position:absolute; right:clamp(20px,4vw,52px); top:50%; transform:translateY(-50%);
+169:   z-index:26; width:2px; height:180px; background:rgba(255,255,255,.10); border-radius:2px;
+170: }
+171: .pg-progress span{
+172:   position:absolute; left:0; top:0; width:100%; height:0%;
+173:   background:linear-gradient(var(--pg-accent-2), var(--pg-accent)); border-radius:2px;
+174: }
+175: @media (max-width:680px){ .pg-progress{ display:none; } }
+176: 
+177: @media (prefers-reduced-motion: reduce){
+178:   .pixeo-gallery .pg-bar{ animation:none; }
+179: }
+180: 
+The above content shows the entire, complete file contents of the requested file.
+

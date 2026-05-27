@@ -1,0 +1,536 @@
+/* ──────────────────────────────────────────────────────────────────
+   NYX Design System — Colors + Typography
+   Source of truth: Figma "NYX Devs Hands-Off" file, extracted from the
+   Campulse Dashboard color-system frame and cross-referenced against
+   Home, ImageCraft, VideoVista and the Assets page.
+
+   NYX is a dark-first, deep-purple product suite. Surfaces are near-black
+   neutrals stacked in elevation (BG → Layer1 → Layer2 → Layer3).
+   Primary action color is a vivid violet (#7648EF) with a lighter
+   "hover highlight" tint (#B39DFF) used for active states, outlined
+   buttons, tabs and section eyebrows.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("cd84e2ed-e1f8-4dcd-b580-8d0fae19966c") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("7253f065-9a64-4ede-bce4-2f3d8f0077af") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("8108f437-ae62-4b9e-a6b8-9f7bd3f791db") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("1b50ffca-7f67-495f-85f8-6d3a9651f595") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("57b1cbdf-59a9-42a5-bb94-45b197ad0b75") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("e4f69a29-ebc0-4173-8467-dea8402dfc38") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("e2e70595-cd35-4141-8033-cfe0f484ff0c") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("4072fec6-d237-432f-bad9-0eb04e858900") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("2f665128-9590-4f1d-a3c4-26dddbd199c4") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("3f926901-c7a4-4143-92a9-6ce57091a9b3") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("19f0b0b8-e87f-43ea-ba3d-bba99e492123") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("779d8547-8f55-45d3-960b-a0c2e3b5f4cc") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("de8a9d17-db14-4062-9083-c625e1828b82") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("4072fec6-d237-432f-bad9-0eb04e858900") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("2f665128-9590-4f1d-a3c4-26dddbd199c4") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("3f926901-c7a4-4143-92a9-6ce57091a9b3") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("19f0b0b8-e87f-43ea-ba3d-bba99e492123") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("779d8547-8f55-45d3-960b-a0c2e3b5f4cc") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("de8a9d17-db14-4062-9083-c625e1828b82") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("6a4b7163-69ac-4b78-99d9-9da4e18ef8a4") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("72d562f7-0d91-41b2-afdf-544cacaaa9e2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("8579ac15-661b-4be3-b5e2-9de6e8fe1669") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("37455d86-23a2-49a2-9b5f-abf6a5d3000d") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("36070325-55ab-4ce7-82cf-1e56ae0c2291") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("5b67bd05-f050-4c0c-ba50-ff628bdd0a6c") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("c23b8d84-f29d-44d7-9bf0-57572fe6e27c") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("f4d513d2-3a2f-4e5d-9ecf-d1d02bd0f1a2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("b6c298b5-2a49-4091-8b13-6e0110e68aa8") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("ebff3db3-fd38-4aad-9efa-65f9182ed1bd") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+:root {
+  /* ── Brand / Primary ─────────────────────────────────────────────── */
+  --nyx-primary:        #7648EF;   /* vivid violet — CTAs, selected states */
+  --nyx-primary-hover:  #5E35B1;   /* deeper violet — shadow tint */
+  --nyx-primary-soft:   #B39DFF;   /* lavender — outlined btn borders, tab underline, eyebrows */
+  --nyx-primary-bg:     rgba(118, 72, 239, 0.08);
+  --nyx-primary-glow:   rgba(94, 53, 177, 0.25);
+
+  /* ── Surfaces (dark) ─────────────────────────────────────────────── */
+  --nyx-bg:             #18181A;   /* app background */
+  --nyx-nav:            #232227;   /* left nav */
+  --nyx-layer-1:        #1E1E20;   /* cards, panels */
+  --nyx-layer-2:        #2C2C30;   /* inputs, tags, subtle containers */
+  --nyx-layer-3:        #161618;   /* nested / lower */
+  --nyx-layer-5:        #1A1A1D;   /* special overlays */
+
+  /* ── Borders ─────────────────────────────────────────────────────── */
+  --nyx-border:         #323236;   /* default 1px border */
+  --nyx-border-strong:  #3F3F42;   /* emphasized border */
+  --nyx-border-muted:   #2C2C30;   /* hairline on layer-1 */
+  --nyx-divider:        rgba(255, 255, 255, 0.06);
+
+  /* ── Text ────────────────────────────────────────────────────────── */
+  --nyx-fg:             #FFFFFF;   /* titles, primary text */
+  --nyx-fg-muted:       #C5C5C5;   /* body secondary */
+  --nyx-fg-dim:         #B0B0B0;   /* labels, disabled */
+  --nyx-fg-soft:        #777777;   /* placeholder, timestamps */
+  --nyx-fg-inverse:     #0B1215;   /* text on white */
+
+  /* ── Semantic ────────────────────────────────────────────────────── */
+  --nyx-success:        #4ADE80;   /* +delta pills, success */
+  --nyx-success-strong: #1C994A;
+  --nyx-success-bg:     rgba(74, 222, 128, 0.12);
+  --nyx-danger:         #F87171;   /* -delta, alerts */
+  --nyx-danger-bg:      rgba(248, 113, 113, 0.12);
+  --nyx-warning:        #EB75B2;   /* pink accent — Campulse alerts */
+  --nyx-info:           #B39DFF;
+
+  /* ── Chart palette (violet-forward, extends into pink + green) ──── */
+  --nyx-chart-1:        #7648EF;
+  --nyx-chart-2:        #B39DFF;
+  --nyx-chart-3:        #5E35B1;
+  --nyx-chart-4:        #EB75B2;
+  --nyx-chart-5:        #4ADE80;
+  --nyx-chart-6:        #DBC3EB;
+
+  /* ── Shadows + elevation ────────────────────────────────────────── */
+  --nyx-shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.3);
+  --nyx-shadow-md:      0 4px 6px -4px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  --nyx-shadow-lg:      0 0 15px rgba(94, 53, 177, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --nyx-shadow-glow:    0 0 15px rgba(94, 53, 177, 0.25);
+  --nyx-shadow-card:    0 4px 6px -4px rgba(94, 53, 177, 0.05), 0 10px 15px -3px rgba(94, 53, 177, 0.05);
+
+  /* ── Radii ───────────────────────────────────────────────────────── */
+  --nyx-radius-xs:       4px;
+  --nyx-radius-sm:       8px;
+  --nyx-radius-md:      10px;   /* nav tiles */
+  --nyx-radius-lg:      12px;   /* cards */
+  --nyx-radius-xl:      16px;   /* large cards / tables */
+  --nyx-radius-pill:    40px;   /* tags */
+  --nyx-radius-full:  9999px;   /* buttons, avatars */
+
+  /* ── Spacing (4px base) ──────────────────────────────────────────── */
+  --nyx-space-1:         4px;
+  --nyx-space-2:         8px;
+  --nyx-space-3:        12px;
+  --nyx-space-4:        16px;
+  --nyx-space-5:        20px;
+  --nyx-space-6:        24px;
+  --nyx-space-8:        32px;
+  --nyx-space-10:       40px;
+  --nyx-space-12:       48px;
+  --nyx-space-16:       64px;
+
+  /* ── Type families ───────────────────────────────────────────────── */
+  --nyx-font-display:   "Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --nyx-font-body:      "Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --nyx-font-ui:        "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif; /* dashboards + data tables */
+  --nyx-font-mono:      "JetBrains Mono", ui-monospace, Consolas, "Liberation Mono", monospace;
+
+  /* ── Type scale (matches Figma: 10 / 12 / 13 / 14 / 15 / 16 / 18 / 20 / 23 / 25 / 32) */
+  --nyx-text-xs:        10px;   /* tag labels, letter-spaced */
+  --nyx-text-sm:        12px;   /* nav labels, captions */
+  --nyx-text-ui:        13px;   /* dense UI rows */
+  --nyx-text-base:      14px;   /* body default */
+  --nyx-text-md:        15px;   /* body comfortable */
+  --nyx-text-lg:        16px;   /* body large / section lead */
+  --nyx-text-xl:        18px;   /* card titles */
+  --nyx-text-2xl:       20px;
+  --nyx-text-3xl:       23px;   /* section headings */
+  --nyx-text-4xl:       25px;   /* page headings */
+  --nyx-text-5xl:       32px;   /* display (docs + color-system) */
+
+  /* Weights */
+  --nyx-fw-regular:     400;
+  --nyx-fw-medium:      500;
+  --nyx-fw-semibold:    600;
+  --nyx-fw-bold:        700;
+}
+
+/* ── Light mode ──────────────────────────────────────────────────────
+   NYX has two shipping modes: Dark (default, above) and Light.
+   In Light the sidebar stays near-black (brand anchor), but the main
+   canvas turns pale lavender `#E8E7EE`, cards go white `#FFFFFF`,
+   text flips to black, and borders use a light violet-neutral.
+   Outlined buttons keep their 2px `#7648EF` border (not lavender) —
+   on white the vivid violet reads as the outlined motif.
+   Sidebar-scoped colors (AppShell) stay dark in both modes so the
+   brand plate + violet glow are preserved as the vertical brand bar. */
+:root[data-theme="light"],
+.nyx-light {
+  --nyx-bg:             #E8E7EE;
+  --nyx-nav:            #232227;       /* dark nav in both modes */
+  --nyx-layer-1:        #FFFFFF;       /* card surface */
+  --nyx-layer-2:        #F2F1F7;       /* inputs, tags */
+  --nyx-layer-3:        #ECEBF2;       /* nested / lower */
+  --nyx-layer-5:        #F7F6FB;
+
+  --nyx-border:         #D8D6E2;
+  --nyx-border-strong:  #BFBCCF;
+  --nyx-border-muted:   #E5E3EC;
+  --nyx-divider:        rgba(0, 0, 0, 0.06);
+
+  --nyx-fg:             #0B0B0F;
+  --nyx-fg-muted:       #3B3B42;
+  --nyx-fg-dim:         #6B6B74;
+  --nyx-fg-soft:        #8E8E97;
+  --nyx-fg-inverse:     #FFFFFF;
+
+  /* brand stays — violet reads well on white */
+  --nyx-primary-bg:     rgba(118, 72, 239, 0.08);
+  --nyx-shadow-card:    0 4px 6px -4px rgba(94, 53, 177, 0.08), 0 10px 15px -3px rgba(94, 53, 177, 0.06);
+  --nyx-shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.06);
+  --nyx-shadow-md:      0 4px 6px -4px rgba(0, 0, 0, 0.08), 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Semantic type roles ─────────────────────────────────────────── */
+/* Use Montserrat for product surfaces (home, image/video craft).
+   Use Inter for dense dashboards and data tables (Campulse analytics). */
+
+.nyx-display {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-bold);
+  font-size: var(--nyx-text-5xl);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--nyx-fg);
+}
+
+.nyx-h1 {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-bold);
+  font-size: var(--nyx-text-4xl);
+  line-height: 1.2;
+  color: var(--nyx-fg);
+}
+
+.nyx-h2 {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-bold);
+  font-size: var(--nyx-text-3xl);
+  line-height: 1.2;
+  color: var(--nyx-fg);
+}
+
+.nyx-h3 {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-bold);
+  font-size: var(--nyx-text-xl);
+  line-height: 1;
+  color: var(--nyx-fg);
+}
+
+.nyx-eyebrow {
+  font-family: var(--nyx-font-ui);
+  font-weight: var(--nyx-fw-bold);
+  font-size: var(--nyx-text-base);
+  line-height: 1.6;
+  letter-spacing: 2px;
+  text-transform: none;
+  color: var(--nyx-primary-soft);
+}
+
+.nyx-overline {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-bold);
+  font-size: var(--nyx-text-sm);
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--nyx-fg);
+}
+
+.nyx-lead {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-medium);
+  font-size: var(--nyx-text-md);
+  line-height: 1.5;
+  color: var(--nyx-fg);
+}
+
+.nyx-body {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-regular);
+  font-size: var(--nyx-text-base);
+  line-height: 1.5;
+  color: var(--nyx-fg);
+}
+
+.nyx-body-muted {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-regular);
+  font-size: var(--nyx-text-base);
+  line-height: 1.5;
+  color: var(--nyx-fg-muted);
+}
+
+.nyx-caption {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-regular);
+  font-size: var(--nyx-text-sm);
+  line-height: 1.2;
+  color: var(--nyx-fg-dim);
+}
+
+.nyx-tag-label {
+  font-family: var(--nyx-font-display);
+  font-weight: var(--nyx-fw-bold);
+  font-size: var(--nyx-text-xs);
+  line-height: 16px;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  color: var(--nyx-fg);
+}
+
+.nyx-metric {
+  font-family: var(--nyx-font-ui);
+  font-weight: var(--nyx-fw-bold);
+  font-size: 28px;
+  line-height: 1;
+  color: var(--nyx-fg);
+  letter-spacing: -0.01em;
+}
+
+.nyx-metric-label {
+  font-family: var(--nyx-font-ui);
+  font-weight: var(--nyx-fw-bold);
+  font-size: var(--nyx-text-sm);
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--nyx-fg-muted);
+}
+
+.nyx-code,
+.nyx-mono {
+  font-family: var(--nyx-font-mono);
+  font-size: var(--nyx-text-base);
+  color: var(--nyx-fg);
+}

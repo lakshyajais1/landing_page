@@ -1,0 +1,78 @@
+Created At: 2026-05-22T07:52:49Z
+Completed At: 2026-05-22T07:52:49Z
+File Path: `file:///Users/ayannarayan/Website/src/PixeoGallery.tsx`
+Total Lines: 298
+Total Bytes: 10922
+Showing lines 1 to 298
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: import { useEffect, useMemo, useRef } from 'react';
+2: import './PixeoGallery.css';
+3: 
+4: /* "Into the Pixeo" — a scroll-driven 3D card gallery. Adapted from a
+5:    standalone page into a section that can be embedded in the Pixeo PDP:
+6:    the scroll engine is driven by this section's own scroll position
+7:    (via a sticky stage) instead of the whole window. */
+8: 
+9: const IMAGES = [
+10:   { url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop', title: 'Umami View', tag: 'UI/UX' },
+11:   { url: 'https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=800&auto=format&fit=crop', title: 'Octy', tag: 'Brand' },
+12:   { url: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop', title: 'Shelter', tag: 'Web' },
+13:   { url: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=800&auto=format&fit=crop', title: '30 UA', tag: 'Motion' },
+14:   { url: 'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800&auto=format&fit=crop', title: 'Twenty Three', tag: 'Editorial' },
+15:   { url: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=800&auto=format&fit=crop', title: 'Nyx', tag: 'Identity' },
+16:   { url: 'https://images.unsplash.com/photo-1618005192384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop', title: 'Runway', tag: 'Product' },
+17:   { url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop', title: 'Scrum', tag: 'App' },
+18:   { url: 'https://images.unsplash.com/photo-1614850715649-1d0106293cb1?q=
+<truncated 8728 bytes>
+                     height: `${h}px`,
+250:                     marginLeft: `${w / -2}px`,
+251:                     marginTop: `${h / -2}px`,
+252:                   }}
+253:                 >
+254:                   <div className="pg-card__media">
+255:                     {item.item!.url ? (
+256:                       <img src={item.item!.url} alt={item.item!.title} loading="lazy" />
+257:                     ) : (
+258:                       <div
+259:                         className="pg-card__placeholder"
+260:                         style={{ background: `linear-gradient(150deg, hsl(${hue} 70% 22%), hsl(${(hue + 50) % 360} 65% 14%))` }}
+261:                       >
+262:                         <div className="pg-num">{String(i + 1).padStart(2, '0')}</div>
+263:                         <div className="pg-meta">
+264:                           <span>{item.item!.title}</span>
+265:                           <span>{item.item!.tag}</span>
+266:                         </div>
+267:                       </div>
+268:                     )}
+269:                     <div className="pg-card__sheen" />
+270:                   </div>
+271:                 </div>
+272:               );
+273:             })}
+274:           </div>
+275:         </div>
+276: 
+277:         {/* Interleaved heading overlays */}
+278:         {initialItems.map((item, idx) => {
+279:           if (item.type !== 'heading') return null;
+280:           return (
+281:             <div
+282:               key={`pg-heading-${idx}`}
+283:               className="pg-hero"
+284:               style={{ opacity: 0, pointerEvents: 'none' }}
+285:               ref={el => {
+286:                 if (itemsRef.current[idx]) itemsRef.current[idx].el = el;
+287:               }}
+288:             >
+289:               <h1><em>{item.title}</em></h1>
+290:               <p>{item.subtitle}</p>
+291:             </div>
+292:           );
+293:         })}
+294:       </div>
+295:     </section>
+296:   );
+297: }
+298: 
+The above content shows the entire, complete file contents of the requested file.
+

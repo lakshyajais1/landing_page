@@ -1,0 +1,1207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NYX — Autonomous AI for Modern Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg: #f7f6f1;
+    --bg-2: #efece2;
+    --ink: #161613;
+    --ink-2: #3a3a35;
+    --muted: #8a8a82;
+    --line: #e3e0d4;
+    --card: #ffffff;
+    --accent: oklch(0.55 0.18 282);
+    --accent-soft: oklch(0.93 0.04 282);
+    --accent-ink: oklch(0.32 0.12 282);
+    --serif: "Instrument Serif", ui-serif, Georgia, serif;
+    --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --r-lg: 22px;
+    --r-md: 14px;
+    --r-sm: 8px;
+    --shadow-soft: 0 1px 0 rgba(20,20,15,.04), 0 8px 24px -12px rgba(20,20,15,.12);
+    --shadow-lift: 0 1px 0 rgba(20,20,15,.05), 0 30px 60px -30px rgba(20,20,15,.25);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-feature-settings: "ss01","cv11";
+    -webkit-font-smoothing:antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  ::selection{ background: var(--accent); color:#fff }
+  a{color:inherit; text-decoration:none}
+  button{font: inherit; color: inherit; background:none; border:0; cursor:pointer}
+
+  /* Grain noise overlay (subtle) */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index: 1000; opacity:.035;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+
+  .wrap{ max-width: 1240px; margin: 0 auto; padding: 0 28px }
+  .mono{ font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted) }
+
+  /* ───────────────── Nav ───────────────── */
+  .nav{
+    position: sticky; top: 14px; z-index: 60;
+    margin: 14px auto 0; max-width: 1180px; padding: 0 14px;
+  }
+  .nav-inner{
+    display:flex; align-items:center; gap: 18px;
+    padding: 10px 12px 10px 18px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.72);
+    backdrop-filter: blur(14px) saturate(1.1);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    border-radius: 999px;
+    box-shadow: var(--shadow-soft);
+  }
+  .brand{ display:flex; align-items:center; gap: 10px; font-weight: 600; letter-spacing:-.01em }
+  .brand-mark{
+    width: 26px; height: 26px; border-radius: 8px;
+    background:
+      conic-gradient(from 210deg at 50% 50%, var(--accent), #4b1ed3, #8a6bff, var(--accent));
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.08), 0 6px 14px -6px var(--accent);
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spin 18s linear infinite;
+  }
+  .brand-mark::after{
+    content:""; position:absolute; inset: 6px; border-radius: 4px;
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  @keyframes spin { to { transform: rotate(360deg) } }
+  .nav-links{ display:flex; gap: 4px; margin-left: 16px }
+  .nav-links a{
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; color: var(--ink-2);
+    transition: background .2s ease, color .2s ease;
+  }
+  .nav-links a:hover{ background: var(--bg-2); color: var(--ink) }
+  .nav-spacer{ flex:1 }
+  .btn{
+    display:inline-flex; align-items:center; gap: 8px;
+    padding: 10px 16px; border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    will-change: transform;
+  }
+  .btn-ghost{ color: var(--ink-2) }
+  .btn-ghost:hover{ color: var(--ink) }
+  .btn-primary{
+    background: var(--ink); color: #fdfdfa;
+    box-shadow: 0 1px 0 rgba(255,255,255,.15) inset, 0 10px 24px -12px rgba(20,20,15,.6);
+  }
+  .btn-primary:hover{ background:#000 }
+  .btn-accent{
+    background: var(--accent); color:#fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 14px 30px -14px var(--accent);
+  }
+  .btn-accent:hover{ filter: brightness(1.05) }
+
+  /* ───────────────── Hero ───────────────── */
+  .hero{ position: relative; padding: 110px 0 80px; perspective: 1400px; overflow: hidden }
+
+  /* Iridescent 3D orb (whitewidget-style) */
+  .orb-wrap{ position:absolute; inset: 0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index: 0; top: 60px }
+  .orb{
+    width: 720px; height: 720px; max-width: 90vw; max-height: 90vw;
+    border-radius: 50%;
+    position: relative;
+    filter: blur(2px) saturate(1.15);
+    animation: orbMorph 18s ease-in-out infinite, orbFloat 14s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+  .orb::before, .orb::after{
+    content:""; position:absolute; inset:0; border-radius: inherit;
+  }
+  .orb::before{
+    background:
+      conic-gradient(from 0deg,
+        #ff8a5b 0%,
+        #c79bff 18%,
+        #6ec1ff 36%,
+        #84e7c6 54%,
+        #ffd66e 72%,
+        #ff7ab8 90%,
+        #ff8a5b 100%);
+    animation: orbSpin 22s linear infinite;
+    filter: blur(40px);
+    opacity: .9;
+  }
+  .orb::after{
+    background:
+      conic-gradient(from 180deg,
+        rgba(255,138,91,.0) 0%,
+        rgba(199,155,255,.6) 25%,
+        rgba(110,193,255,.0) 50%,
+        rgba(255,122,184,.6) 75%,
+        rgba(255,138,91,.0) 100%);
+    animation: orbSpin 30s linear reverse infinite;
+    filter: blur(60px);
+    mix-blend-mode: screen;
+    opacity: .8;
+  }
+  /* Inner specular highlight to fake 3D */
+  .orb-hi{
+    position:absolute; inset: 12% 12% auto auto; width: 35%; height: 35%; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), rgba(255,255,255,0) 60%);
+    filter: blur(10px);
+    animation: orbFloat 14s ease-in-out -2s infinite;
+    z-index: 2;
+  }
+  /* Outer glow halo */
+  .orb-halo{
+    position:absolute; width: 1100px; height: 1100px; max-width: 130vw; max-height: 130vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(199,155,255,.35), rgba(199,155,255,0) 60%);
+    filter: blur(50px);
+    animation: orbPulse 8s ease-in-out infinite;
+  }
+  /* Soft white scrim so headline reads */
+  .orb-scrim{
+    position:absolute; inset: -10%;
+    background: radial-gradient(ellipse at 50% 35%, rgba(247,246,241,0) 0%, rgba(247,246,241,.55) 45%, rgba(247,246,241,.92) 75%);
+    pointer-events:none; z-index: 1;
+  }
+
+  @keyframes orbSpin { to { transform: rotate(360deg) } }
+  @keyframes orbMorph {
+    0%,100% { border-radius: 50% 50% 50% 50% / 50% 50% 50% 50% }
+    25%     { border-radius: 56% 44% 52% 48% / 48% 52% 48% 52% }
+    50%     { border-radius: 48% 52% 56% 44% / 54% 46% 50% 50% }
+    75%     { border-radius: 52% 48% 46% 54% / 50% 50% 56% 44% }
+  }
+  @keyframes orbFloat {
+    0%,100% { translate: 0 0 }
+    50%     { translate: 0 -22px }
+  }
+  @keyframes orbPulse {
+    0%,100% { opacity:.7; transform: scale(1) }
+    50%     { opacity:1; transform: scale(1.08) }
+  }
+
+  /* faint grain over orb to fake film */
+  .orb-grain{
+    position:absolute; inset:0; pointer-events:none; opacity:.08; mix-blend-mode: overlay; z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap: 10px;
+    padding: 6px 12px 6px 6px; border-radius: 999px;
+    background: rgba(255,255,255,.75); border:1px solid var(--line);
+    font-size: 13px; color: var(--ink-2);
+    box-shadow: var(--shadow-soft);
+  }
+  .eyebrow .pill{
+    padding: 3px 9px; border-radius: 999px;
+    background: var(--accent); color:#fff; font-size: 11px; font-weight: 500; letter-spacing: .02em;
+  }
+  .eyebrow .arrow{ transition: transform .25s ease }
+  .eyebrow:hover .arrow{ transform: translateX(3px) }
+
+  .hero-content{ text-align:center; position: relative; z-index: 2 }
+  h1.display{
+    font-size: clamp(44px, 7.6vw, 104px);
+    line-height: .98;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    margin: 22px auto 22px;
+    max-width: 14ch;
+  }
+  h1 .ital{ font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em }
+  h1 .grad{
+    background: linear-gradient(100deg, var(--accent) 10%, #ff8a5b 50%, var(--accent) 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    background-size: 200% 100%;
+    animation: shimmer 6s ease-in-out infinite;
+  }
+  @keyframes shimmer { 0%,100%{ background-position: 0% 50% } 50%{ background-position: 100% 50% } }
+  .hero p.sub{
+    font-size: 18px; color: var(--ink-2); max-width: 56ch; margin: 0 auto;
+    line-height: 1.55;
+  }
+  .hero-cta{ margin-top: 30px; display:inline-flex; gap: 10px; align-items:center }
+  .hero-cta .btn-accent{ padding: 14px 22px; font-size: 15px }
+  .hero-cta .btn-ghost{ padding: 14px 18px; font-size: 14px }
+  .hero-cta .btn-ghost .dot{
+    width: 8px; height: 8px; border-radius: 50%; background: #2bbf7a; box-shadow: 0 0 0 4px rgba(43,191,122,.18);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(43,191,122,0) } }
+
+  /* 3D Stage with floating cards */
+  .stage{
+    position: relative;
+    margin: 64px auto 0;
+    max-width: 1080px;
+    height: 520px;
+    transform-style: preserve-3d;
+    perspective: 1600px;
+  }
+  .stage-inner{
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transition: transform .25s cubic-bezier(.2,.7,.3,1);
+  }
+  .product{
+    position: absolute; left: 50%; top: 40px; transform: translateX(-50%);
+    width: 92%; max-width: 940px; height: 460px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: var(--shadow-lift);
+    overflow: hidden;
+    transform-style: preserve-3d;
+  }
+  .product .topbar{
+    height: 38px; border-bottom: 1px solid var(--line);
+    display:flex; align-items:center; gap: 8px; padding: 0 14px;
+    background: linear-gradient(180deg, #fbfaf6, #f4f3ec);
+  }
+  .product .topbar .dots{ display:flex; gap: 6px }
+  .product .topbar .dots span{ width: 10px; height: 10px; border-radius: 50%; background: var(--line) }
+  .product .topbar .url{
+    flex:1; text-align:center; font-family: var(--mono); font-size: 11px; color: var(--muted);
+  }
+  .product .body{ display:grid; grid-template-columns: 200px 1fr; height: calc(100% - 38px) }
+  .side{ border-right: 1px solid var(--line); padding: 16px 12px; background: #fcfbf6 }
+  .side h4{ font-size: 11px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 6px 8px 8px }
+  .side .item{ display:flex; align-items:center; gap: 10px; padding: 8px 10px; border-radius: 10px; font-size: 13px; color: var(--ink-2); cursor: default }
+  .side .item .ic{ width: 16px; height: 16px; border-radius: 4px; background: var(--bg-2); border:1px solid var(--line) }
+  .side .item.active{ background: var(--accent-soft); color: var(--accent-ink) }
+  .side .item.active .ic{ background: var(--accent); border-color: transparent }
+
+  .canvas{ padding: 18px; display:flex; flex-direction: column; gap: 14px; overflow:hidden }
+  .canvas-head{ display:flex; align-items:center; justify-content: space-between }
+  .canvas-head h3{ margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -.01em }
+  .chip{ font-family: var(--mono); font-size: 10px; padding: 4px 8px; border-radius: 999px; background: var(--bg-2); color: var(--ink-2) }
+  .chip.live{ background: #e9f8f0; color: #0e8a4a }
+  .stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px }
+  .stat{ background: #fbfaf6; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px }
+  .stat .k{ font-size: 11px; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .08em }
+  .stat .v{ font-size: 24px; font-weight: 600; letter-spacing:-.02em; margin-top: 2px }
+  .stat .t{ font-size: 11px; color: #0e8a4a; margin-top: 2px; font-family: var(--mono) }
+  .panes{ display:grid; grid-template-columns: 1.4fr 1fr; gap: 12px; flex:1; min-height: 0 }
+  .pane{ background:#fbfaf6; border:1px solid var(--line); border-radius: 14px; padding: 12px; display:flex; flex-direction: column; min-height: 0 }
+  .pane h5{ margin: 0 0 8px; font-size: 12px; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .08em }
+  /* Sparkline area chart */
+  .chart{ flex:1; min-height: 0; position: relative }
+  .chart svg{ width:100%; height: 100%; display:block }
+  .nodes{ display:grid; grid-template-columns: 1fr 1fr; gap: 8px; align-content: start }
+  .node{
+    background: #fff; border:1px solid var(--line); border-radius: 10px; padding: 8px 10px;
+    display:flex; align-items:center; gap: 8px; font-size: 12px;
+    transition: transform .2s ease;
+  }
+  .node:hover{ transform: translateY(-2px) }
+  .node .dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--accent) }
+  .node.ok .dot{ background: #1aa05d }
+  .node.warn .dot{ background: #e8a92e }
+
+  /* Floating chips around product */
+  .float{
+    position: absolute; padding: 10px 14px;
+    background: #fff; border:1px solid var(--line); border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    display:flex; align-items:center; gap: 10px;
+    font-size: 13px; font-weight: 500;
+    transform-style: preserve-3d;
+  }
+  .float .av{ width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color:#fff; display:flex; align-items:center; justify-content: center; font-size: 12px; font-weight: 600 }
+  .float small{ display:block; font-weight: 400; color: var(--muted); font-size: 11px; font-family: var(--mono) }
+  .float.f1{ left: 2%; top: 110px; transform: translateZ(60px) rotate(-4deg); animation: floaty 6s ease-in-out infinite }
+  .float.f2{ right: 2%; top: 60px; transform: translateZ(80px) rotate(3deg); animation: floaty 7s ease-in-out -2s infinite }
+  .float.f3{ right: 4%; bottom: 30px; transform: translateZ(40px) rotate(-2deg); animation: floaty 8s ease-in-out -4s infinite }
+  .float.f4{ left: 4%; bottom: 50px; transform: translateZ(70px) rotate(4deg); animation: floaty 9s ease-in-out -1s infinite }
+  @keyframes floaty {
+    0%,100%{ translate: 0 0 } 50%{ translate: 0 -8px }
+  }
+
+  /* ───────────── Section: logos / ticker ───────────── */
+  .ticker-section{ padding: 30px 0 60px; text-align:center }
+  .ticker-section .mono{ margin-bottom: 22px; display:block }
+  .ticker{
+    overflow:hidden; mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .ticker-track{
+    display:flex; gap: 56px; width: max-content; animation: tick 28s linear infinite;
+    align-items:center;
+  }
+  @keyframes tick { to { transform: translateX(-50%) } }
+  .logo{
+    font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--ink-2); opacity: .6;
+    letter-spacing: -.01em; white-space: nowrap;
+  }
+  .logo.alt{ font-family: var(--sans); font-style: normal; font-weight: 600; letter-spacing: -.02em }
+
+  /* ───────────── Section heading ───────────── */
+  .sec{ padding: 110px 0 }
+  .sec-head{ display:flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 56px }
+  .sec-head h2{
+    font-size: clamp(34px, 4.6vw, 60px);
+    line-height: 1.02; letter-spacing: -.025em; font-weight: 600;
+    margin: 10px 0 0; max-width: 18ch;
+  }
+  .sec-head h2 .ital{ font-family: var(--serif); font-style: italic; font-weight: 400 }
+  .sec-head p{ max-width: 42ch; color: var(--ink-2); font-size: 16px; line-height: 1.55; margin: 0 }
+
+  /* ───────────── Features grid (tilt cards) ───────────── */
+  .features{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 18px }
+  .card{
+    grid-column: span 4;
+    background: var(--card); border: 1px solid var(--line); border-radius: 22px;
+    padding: 26px; min-height: 280px; position: relative; overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform .2s ease, box-shadow .3s ease, border-color .3s ease;
+    will-change: transform;
+  }
+  .card:hover{ box-shadow: var(--shadow-lift); border-color: #d6d3c5 }
+  .card .num{ font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase }
+  .card h3{ font-size: 22px; letter-spacing:-.02em; margin: 14px 0 8px; font-weight: 600 }
+  .card p{ color: var(--ink-2); font-size: 14px; line-height: 1.55; margin: 0 }
+  .card .vis{ margin-top: 22px; height: 130px; border-radius: 14px; position: relative; overflow:hidden;
+    background: linear-gradient(180deg, #fbfaf6, #f1efe5);
+    border: 1px solid var(--line);
+  }
+  .card.span-6{ grid-column: span 6 }
+  .card.dark{
+    background: var(--ink); color: #f4f2ea; border-color: #1f1f1c;
+  }
+  .card.dark p{ color: #b8b6ad }
+  .card.dark .vis{ background: linear-gradient(180deg, #1d1d1a, #131311); border-color:#262623 }
+  .card.accent{ background: var(--accent); color:#fff; border-color: transparent }
+  .card.accent p{ color: rgba(255,255,255,.82) }
+  .card.accent .vis{ background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06)); border-color: rgba(255,255,255,.25) }
+
+  /* tiny visualizations inside cards */
+  .v-flow{ display:flex; align-items:center; justify-content: space-between; padding: 18px; height: 100%; transform: translateZ(20px) }
+  .v-flow .node2{ width: 44px; height: 44px; border-radius: 12px; background:#fff; border:1px solid var(--line); display:flex; align-items:center; justify-content: center; font-family: var(--mono); font-size: 11px }
+  .v-flow .line{ flex:1; height: 2px; background: repeating-linear-gradient(90deg, var(--ink) 0 4px, transparent 4px 8px); margin: 0 6px; opacity:.4 }
+  .card.dark .v-flow .node2{ background:#23231f; border-color:#2c2c28; color:#f4f2ea }
+  .card.dark .v-flow .line{ background: repeating-linear-gradient(90deg, #6a6a64 0 4px, transparent 4px 8px) }
+
+  .v-stack{ position:absolute; inset: 18px; display:flex; flex-direction: column; gap: 8px; transform: translateZ(15px) }
+  .v-stack .row{ height: 22px; border-radius: 6px; background: var(--bg-2); position: relative; overflow:hidden }
+  .v-stack .row::after{ content:""; position:absolute; inset: 0; width: var(--w, 60%); background: var(--accent); opacity: .85; border-radius: 6px }
+  .v-stack .row:nth-child(1){ --w: 78% }
+  .v-stack .row:nth-child(2){ --w: 52% }
+  .v-stack .row:nth-child(3){ --w: 90% }
+  .v-stack .row:nth-child(4){ --w: 38% }
+
+  .v-orbit{ position:absolute; inset: 0; display:flex; align-items:center; justify-content: center; transform: translateZ(15px) }
+  .v-orbit .core{ width: 44px; height: 44px; border-radius: 14px; background: var(--ink); color:#fff; display:flex; align-items:center; justify-content: center; font-family: var(--mono); font-size: 11px; z-index: 2 }
+  .v-orbit .ring{ position:absolute; border:1px dashed #d8d5c7; border-radius: 50%; }
+  .v-orbit .r1{ width: 110px; height: 110px; animation: spin 14s linear infinite }
+  .v-orbit .r2{ width: 170px; height: 100px; animation: spin 22s linear reverse infinite }
+  .v-orbit .sat{ position:absolute; width: 22px; height: 22px; border-radius: 7px; background:#fff; border:1px solid var(--line); display:flex; align-items:center; justify-content: center; font-family: var(--mono); font-size: 9px }
+  .card.accent .v-orbit .core{ background:#fff; color: var(--accent-ink) }
+  .card.accent .v-orbit .ring{ border-color: rgba(255,255,255,.4) }
+  .card.accent .v-orbit .sat{ background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.3); color:#fff }
+
+  .v-bars{ position:absolute; inset: 18px; display:flex; align-items:flex-end; gap: 6px; transform: translateZ(15px) }
+  .v-bars span{ flex:1; background: var(--ink); border-radius: 4px 4px 0 0; opacity:.85 }
+  .card.dark .v-bars span{ background:#f4f2ea }
+
+  .v-grid{ position:absolute; inset: 0; display:grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(4, 1fr); transform: translateZ(15px) }
+  .v-grid div{ border-right:1px solid var(--line); border-bottom: 1px solid var(--line) }
+  .v-grid .hl{ background: var(--accent); border-color: transparent }
+
+  /* ───────────── Pricing ───────────── */
+  .toggle{
+    display:inline-flex; align-items:center; padding: 4px; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--line); margin: 0 auto 30px; gap: 2px;
+  }
+  .toggle button{ padding: 8px 16px; border-radius: 999px; font-size: 13px; color: var(--ink-2); position: relative }
+  .toggle button.on{ background: var(--ink); color: #fdfdfa }
+  .toggle .save{ display:inline-block; margin-left: 6px; padding: 2px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-size: 10px; font-family: var(--mono) }
+  .toggle button.on .save{ background: rgba(255,255,255,.18); color: #fff }
+
+  .pricing{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px }
+  .price{
+    background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px;
+    transition: transform .25s ease, box-shadow .3s ease;
+    position: relative;
+  }
+  .price:hover{ transform: translateY(-6px); box-shadow: var(--shadow-lift) }
+  .price h4{ margin:0; font-size: 14px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted) }
+  .price .amt{ display:flex; align-items:baseline; gap: 8px; margin: 16px 0 6px }
+  .price .amt .big{ font-size: 56px; letter-spacing: -.03em; font-weight: 600 }
+  .price .amt .strike{ color: var(--muted); text-decoration: line-through; font-size: 18px }
+  .price .amt .per{ color: var(--muted); font-size: 14px }
+  .price .desc{ color: var(--ink-2); font-size: 14px; line-height: 1.5; margin: 0 0 18px }
+  .price .cta{ width: 100%; justify-content: center; padding: 12px 16px; border:1px solid var(--line); background: var(--bg); color: var(--ink) }
+  .price .cta:hover{ background: var(--bg-2) }
+  .price.feat{ background: var(--ink); color: #f4f2ea; border-color: transparent }
+  .price.feat h4{ color: #c8c5b8 }
+  .price.feat .desc{ color: #a8a59c }
+  .price.feat .cta{ background: var(--accent); color:#fff; border-color: transparent }
+  .price.feat .cta:hover{ filter: brightness(1.05) }
+  .price .badge{ position:absolute; top: 16px; right: 16px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-family: var(--mono); background: var(--accent); color:#fff }
+  .price ul{ list-style:none; margin: 18px 0 0; padding: 0; display:flex; flex-direction: column; gap: 10px }
+  .price li{ display:flex; align-items:center; gap: 10px; font-size: 14px; color: var(--ink-2) }
+  .price.feat li{ color: #d4d1c4 }
+  .price li svg{ flex: 0 0 16px }
+
+  /* ───────────── FAQ ───────────── */
+  .faq-grid{ display:grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: start }
+  .faq-list{ display:flex; flex-direction: column; gap: 10px }
+  .faq{
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    overflow:hidden; transition: border-color .2s ease;
+  }
+  .faq:hover{ border-color: #d6d3c5 }
+  .faq summary{
+    list-style: none; cursor: pointer; padding: 18px 22px;
+    display:flex; align-items:center; justify-content: space-between; gap: 16px;
+    font-size: 15px; font-weight: 500; letter-spacing: -.005em;
+  }
+  .faq summary::-webkit-details-marker{ display:none }
+  .faq .plus{ width: 22px; height: 22px; position: relative; flex-shrink: 0 }
+  .faq .plus::before, .faq .plus::after{ content:""; position:absolute; left:50%; top:50%; width: 12px; height: 1.5px; background: var(--ink); translate: -50% -50%; transition: transform .25s ease }
+  .faq .plus::after{ transform: rotate(90deg) }
+  .faq[open] .plus::after{ transform: rotate(0) }
+  .faq-body{ padding: 0 22px 18px; color: var(--ink-2); font-size: 14px; line-height: 1.6 }
+  .faq-cta{
+    background: linear-gradient(160deg, #1c1b30, #13121f 70%);
+    color:#f4f2ea; border-radius: 22px; padding: 28px;
+    position: relative; overflow:hidden;
+    transform-style: preserve-3d;
+  }
+  .faq-cta::before{
+    content:""; position:absolute; inset: -40%;
+    background: conic-gradient(from 0deg, transparent, rgba(138,107,255,.4), transparent 30%, rgba(255,138,91,.3), transparent 60%);
+    animation: spin 18s linear infinite;
+    filter: blur(40px);
+  }
+  .faq-cta > *{ position: relative }
+  .faq-cta h3{ font-size: 28px; letter-spacing: -.02em; margin: 16px 0 10px; font-weight: 600 }
+  .faq-cta p{ color:#b8b6ad; font-size: 14px; line-height: 1.55; margin: 0 0 18px }
+  .faq-cta .stack{ display:flex }
+  .faq-cta .stack span{ width: 36px; height: 36px; border-radius: 50%; border: 2px solid #1c1b30; display:flex; align-items:center; justify-content: center; font-size: 12px; color:#fff; font-weight: 600; margin-left: -8px }
+  .faq-cta .stack span:first-child{ margin-left: 0 }
+  .faq-cta .btn-accent{ display:inline-flex }
+
+  /* ───────────── Final CTA ───────────── */
+  .final{
+    text-align:center; padding: 130px 0;
+    position: relative; overflow:hidden;
+  }
+  .final::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(60% 60% at 50% 30%, var(--accent-soft), transparent 70%),
+      radial-gradient(40% 40% at 80% 70%, #ffe1d1, transparent 70%);
+    z-index: 0; opacity: .8;
+  }
+  .final > *{ position: relative; z-index: 1 }
+  .final h2{
+    font-size: clamp(40px, 6.4vw, 88px); letter-spacing: -.03em; line-height: 1; margin: 0 auto 22px;
+    max-width: 12ch; font-weight: 600;
+  }
+  .final h2 .ital{ font-family: var(--serif); font-style: italic; font-weight: 400 }
+  .final p{ color: var(--ink-2); font-size: 17px; max-width: 50ch; margin: 0 auto 30px; line-height: 1.55 }
+
+  /* ───────────── Footer ───────────── */
+  footer{
+    border-top: 1px solid var(--line); padding: 60px 0 40px;
+  }
+  .foot{ display:grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px }
+  .foot h5{ font-size: 11px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 14px }
+  .foot ul{ list-style: none; margin: 0; padding: 0; display:flex; flex-direction: column; gap: 8px }
+  .foot li a{ font-size: 14px; color: var(--ink-2) }
+  .foot li a:hover{ color: var(--ink) }
+  .foot .brand-blurb{ color: var(--ink-2); font-size: 14px; line-height: 1.55; max-width: 32ch; margin: 14px 0 0 }
+  .foot-bottom{ margin-top: 50px; padding-top: 22px; border-top: 1px solid var(--line); display:flex; justify-content: space-between; align-items:center; font-size: 12px; color: var(--muted); font-family: var(--mono) }
+
+  /* ───────────── Reveal animation ───────────── */
+  .reveal{ opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1) }
+  .reveal.in{ opacity: 1; transform: translateY(0) }
+  .reveal.d1{ transition-delay: .08s } .reveal.d2{ transition-delay: .16s } .reveal.d3{ transition-delay: .24s } .reveal.d4{ transition-delay: .32s }
+
+  /* ───────────── Mobile ───────────── */
+  @media (max-width: 900px){
+    .nav-links{ display:none }
+    .stage{ height: 420px }
+    .product{ height: 380px }
+    .product .body{ grid-template-columns: 1fr }
+    .side{ display:none }
+    .panes{ grid-template-columns: 1fr }
+    .features{ grid-template-columns: 1fr }
+    .card, .card.span-6{ grid-column: 1 / -1 }
+    .pricing{ grid-template-columns: 1fr }
+    .faq-grid{ grid-template-columns: 1fr }
+    .foot{ grid-template-columns: 1fr 1fr; gap: 28px }
+    .float{ display:none }
+    .sec-head{ flex-direction: column; align-items:flex-start; gap: 18px }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#">
+      <span class="brand-mark"></span>
+      <span>NYX</span>
+    </a>
+    <div class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <a class="btn btn-ghost" href="#">Run Free Audit</a>
+    <a class="btn btn-primary" href="#" data-magnet>Book a Demo <span aria-hidden="true">→</span></a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<header class="hero">
+
+  <div class="wrap hero-content">
+    <a class="eyebrow reveal" href="#">
+      <span class="pill">New</span>
+      <span>Introducing autonomous AI marketing agents</span>
+      <span class="arrow">→</span>
+    </a>
+
+    <h1 class="display reveal d1">
+      Autonomous <span class="ital">AI</span> for<br/>
+      <span class="grad">modern marketing.</span>
+    </h1>
+
+    <p class="sub reveal d2">
+      Plan campaigns, generate creatives, launch ads, analyze performance, and optimize growth —
+      all from one unified AI platform.
+    </p>
+
+    <div class="hero-cta reveal d3">
+      <a class="btn btn-accent" href="#" data-magnet>Book a Demo <span aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="#"><span class="dot"></span>Run Free Audit</a>
+    </div>
+  </div>
+
+  <!-- 3D Stage -->
+  <div class="stage reveal d4" id="stage">
+    <div class="stage-inner" id="stageInner">
+
+      <!-- Floating chips around the product -->
+      <div class="float f1" data-depth="60">
+        <div class="av" style="background:#1aa05d">↑</div>
+        <div>
+          <div>5.2× ROAS</div>
+          <small>across paid channels</small>
+        </div>
+      </div>
+
+      <div class="float f2" data-depth="80">
+        <div class="av">CTR</div>
+        <div>
+          <div>40% Higher CTR</div>
+          <small>vs. baseline</small>
+        </div>
+      </div>
+
+      <div class="float f3" data-depth="40">
+        <div class="av" style="background:#e8a92e">$</div>
+        <div>
+          <div>30% Lower CAC</div>
+          <small>quarter-over-quarter</small>
+        </div>
+      </div>
+
+      <div class="float f4" data-depth="70">
+        <div class="av">⚡</div>
+        <div>
+          <div>75% Faster Launches</div>
+          <small>idea → live campaign</small>
+        </div>
+      </div>
+
+      <!-- Main product window -->
+      <div class="product" data-depth="0">
+        <div class="topbar">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="url">nyx.ai / workspace / multi-channel</div>
+          <div style="width:46px"></div>
+        </div>
+
+        <div class="body">
+          <aside class="side">
+            <h4>Channels</h4>
+            <div class="item active"><span class="ic"></span>Meta Ads</div>
+            <div class="item"><span class="ic"></span>Google Ads</div>
+            <div class="item"><span class="ic"></span>TikTok Ads</div>
+            <div class="item"><span class="ic"></span>LinkedIn Ads</div>
+            <h4 style="margin-top:18px">AI Agents</h4>
+            <div class="item"><span class="ic"></span>CamPulse</div>
+            <div class="item"><span class="ic"></span>Pixeo</div>
+            <div class="item"><span class="ic"></span>Neo</div>
+          </aside>
+
+          <div class="canvas">
+            <div class="canvas-head">
+              <h3>Multi-Channel Marketing Workspace</h3>
+              <span class="chip live">● Live · 14 campaigns</span>
+            </div>
+
+            <div class="stats">
+              <div class="stat">
+                <div class="k">ROAS · 30d</div>
+                <div class="v"><span data-counter="52">0</span><span style="font-size:24px">×</span></div>
+                <div class="t">↑ 18.2%</div>
+              </div>
+              <div class="stat">
+                <div class="k">CAC reduction</div>
+                <div class="v"><span data-counter="30">0</span><span style="font-size:24px;color:var(--muted)">%</span></div>
+                <div class="t">↓ trending</div>
+              </div>
+              <div class="stat">
+                <div class="k">Launch speed</div>
+                <div class="v"><span data-counter="75">0</span><span style="font-size:24px;color:var(--muted)">%</span></div>
+                <div class="t">faster</div>
+              </div>
+            </div>
+
+            <div class="panes">
+              <div class="pane">
+                <h5>Campaign performance · last 7 days</h5>
+                <div class="chart">
+                  <svg viewBox="0 0 400 140" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stop-color="oklch(0.55 0.18 282)" stop-opacity=".35"/>
+                        <stop offset="100%" stop-color="oklch(0.55 0.18 282)" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,100 C40,80 60,60 90,70 C120,80 140,40 180,50 C220,60 240,30 280,28 C320,26 340,55 400,40 L400,140 L0,140 Z"
+                          fill="url(#g1)"/>
+                    <path d="M0,100 C40,80 60,60 90,70 C120,80 140,40 180,50 C220,60 240,30 280,28 C320,26 340,55 400,40"
+                          fill="none" stroke="oklch(0.55 0.18 282)" stroke-width="2"/>
+                    <g fill="oklch(0.55 0.18 282)">
+                      <circle cx="90" cy="70" r="3"/>
+                      <circle cx="180" cy="50" r="3"/>
+                      <circle cx="280" cy="28" r="3"/>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="pane">
+                <h5>Active AI agents</h5>
+                <div class="nodes">
+                  <div class="node ok"><span class="dot"></span>CamPulse</div>
+                  <div class="node ok"><span class="dot"></span>Pixeo</div>
+                  <div class="node"><span class="dot"></span>Xeno</div>
+                  <div class="node warn"><span class="dot"></span>Audit AI</div>
+                  <div class="node ok"><span class="dot"></span>Neo</div>
+                  <div class="node ok"><span class="dot"></span>Optimizer</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════ TICKER ═══════════════════════ -->
+<section class="ticker-section">
+  <span class="mono">Trusted by marketers, agencies, startups & D2C brands worldwide</span>
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="logo alt">Microsoft Startups</span>
+      <span class="logo">NVIDIA</span>
+      <span class="logo alt">Product Hunt</span>
+      <span class="logo">Startup India</span>
+      <span class="logo alt">Meta Ads</span>
+      <span class="logo">Google Ads</span>
+      <span class="logo alt">TikTok Ads</span>
+      <span class="logo">LinkedIn Ads</span>
+      <!-- duplicate for seamless scroll -->
+      <span class="logo alt">Microsoft Startups</span>
+      <span class="logo">NVIDIA</span>
+      <span class="logo alt">Product Hunt</span>
+      <span class="logo">Startup India</span>
+      <span class="logo alt">Meta Ads</span>
+      <span class="logo">Google Ads</span>
+      <span class="logo alt">TikTok Ads</span>
+      <span class="logo">LinkedIn Ads</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FEATURES ═══════════════════════ -->
+<section class="sec" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="mono">02 — capabilities</span>
+        <h2>Everything your marketing<br/>team <span class="ital">needs.</span></h2>
+      </div>
+      <p>NYX replaces fragmented marketing tools with autonomous AI agents that handle planning,
+      creative, analytics, and optimization — from one connected workspace.</p>
+    </div>
+
+    <div class="features">
+      <article class="card span-6 tilt reveal">
+        <span class="num">01</span>
+        <h3>AI Campaign Automation.</h3>
+        <p>Plan, launch, and optimize campaigns across Meta, Google, TikTok, LinkedIn, and more — from one workspace.</p>
+        <div class="vis">
+          <div class="v-flow">
+            <div class="node2">M</div>
+            <div class="line"></div>
+            <div class="node2">G</div>
+            <div class="line"></div>
+            <div class="node2">T</div>
+            <div class="line"></div>
+            <div class="node2">in</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span-6 dark tilt reveal d1">
+        <span class="num" style="color:#7d7d76">02</span>
+        <h3>AI Creative Generation.</h3>
+        <p>Generate image ads, video ads, UGC creatives, and product visuals in minutes — not weeks.</p>
+        <div class="vis">
+          <div class="v-orbit">
+            <div class="core">P</div>
+            <div class="ring r1">
+              <span class="sat" style="left:-11px; top: 50%; translate: 0 -50%">▲</span>
+              <span class="sat" style="right:-11px; top: 50%; translate: 0 -50%">▶</span>
+            </div>
+            <div class="ring r2">
+              <span class="sat" style="left:-11px; top: 50%; translate: 0 -50%">UGC</span>
+              <span class="sat" style="right:-11px; top: 50%; translate: 0 -50%">IMG</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card tilt reveal">
+        <span class="num">03</span>
+        <h3>Unified Analytics.</h3>
+        <p>Track every campaign, metric, and platform from one intelligent dashboard.</p>
+        <div class="vis">
+          <div class="v-stack">
+            <div class="row"></div><div class="row"></div><div class="row"></div><div class="row"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card accent tilt reveal d1">
+        <span class="num" style="color: rgba(255,255,255,.65)">04</span>
+        <h3>Autonomous Optimization.</h3>
+        <p>AI agents continuously optimize budgets, targeting, creatives, and performance in real time.</p>
+        <div class="vis">
+          <div class="v-orbit">
+            <div class="core">⚙</div>
+            <div class="ring r1">
+              <span class="sat">$</span>
+              <span class="sat" style="right:-11px; top: 50%; translate: 0 -50%">◎</span>
+            </div>
+            <div class="ring r2">
+              <span class="sat">↗</span>
+              <span class="sat" style="right:-11px; top: 50%; translate: 0 -50%">≈</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card tilt reveal d2">
+        <span class="num">05</span>
+        <h3>Audit AI · uncover growth.</h3>
+        <p>Run a complete audit of your ad accounts and surface hidden growth opportunities — in minutes.</p>
+        <div class="vis">
+          <div class="v-grid">
+            <div></div><div></div><div></div><div class="hl"></div><div></div><div></div>
+            <div></div><div class="hl"></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div><div class="hl"></div><div></div>
+            <div></div><div></div><div class="hl"></div><div></div><div></div><div></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ PRODUCTS / NYX ECOSYSTEM ═══════════════════════ -->
+<section class="sec" id="products" style="padding-top: 30px">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="mono">03 — products</span>
+        <h2>Meet the <span class="ital">NYX</span><br/>ecosystem.</h2>
+      </div>
+      <p>Five autonomous AI agents — each purpose-built for a stage of the marketing workflow.
+      Use one. Use all. They share context out of the box.</p>
+    </div>
+
+    <div class="features">
+      <article class="card span-6 accent tilt reveal">
+        <span class="num" style="color: rgba(255,255,255,.65)">01 · campaigns</span>
+        <h3>CamPulse AI.</h3>
+        <p>AI-powered campaign planning, launch, and optimization across every channel — Meta, Google, TikTok, LinkedIn.</p>
+        <div class="vis">
+          <div class="v-flow">
+            <div class="node2">PLN</div>
+            <div class="line"></div>
+            <div class="node2">LCH</div>
+            <div class="line"></div>
+            <div class="node2">OPT</div>
+            <div class="line"></div>
+            <div class="node2">↗</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span-6 tilt reveal d1">
+        <span class="num">02 · creatives</span>
+        <h3>Pixeo AI.</h3>
+        <p>Generate high-performing image ads, videos, UGC content, and product creatives — instantly, on brand.</p>
+        <div class="vis">
+          <div class="v-orbit">
+            <div class="core">Px</div>
+            <div class="ring r1">
+              <span class="sat" style="left:-11px; top: 50%; translate: 0 -50%">▶</span>
+              <span class="sat" style="right:-11px; top: 50%; translate: 0 -50%">◨</span>
+            </div>
+            <div class="ring r2">
+              <span class="sat" style="left:-11px; top: 50%; translate: 0 -50%">UGC</span>
+              <span class="sat" style="right:-11px; top: 50%; translate: 0 -50%">IMG</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card dark tilt reveal">
+        <span class="num" style="color:#7d7d76">03 · voice-first</span>
+        <h3>Xeno AI.</h3>
+        <p>Voice-first campaign automation that plans, creates, and launches campaigns — by speaking to it.</p>
+        <div class="vis">
+          <div class="v-bars">
+            <span style="height: 32%"></span>
+            <span style="height: 64%"></span>
+            <span style="height: 88%"></span>
+            <span style="height: 52%"></span>
+            <span style="height: 76%"></span>
+            <span style="height: 40%"></span>
+            <span style="height: 92%"></span>
+            <span style="height: 60%"></span>
+            <span style="height: 28%"></span>
+            <span style="height: 70%"></span>
+            <span style="height: 48%"></span>
+            <span style="height: 84%"></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card tilt reveal d1">
+        <span class="num">04 · assistant</span>
+        <h3>Neo AI.</h3>
+        <p>Your unified AI marketing assistant for analytics, dashboards, recommendations, and day-to-day ops.</p>
+        <div class="vis">
+          <div class="v-stack">
+            <div class="row"></div><div class="row"></div><div class="row"></div><div class="row"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card tilt reveal d2">
+        <span class="num">05 · audit</span>
+        <h3>Audit AI.</h3>
+        <p>Run a complete audit of your ad accounts and uncover hidden growth opportunities — in minutes.</p>
+        <div class="vis">
+          <div class="v-grid">
+            <div></div><div class="hl"></div><div></div><div></div><div></div><div class="hl"></div>
+            <div></div><div></div><div></div><div class="hl"></div><div></div><div></div>
+            <div class="hl"></div><div></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div class="hl"></div><div></div><div class="hl"></div><div></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="reveal d2" style="display:flex; justify-content:center; margin-top: 36px">
+      <a href="#" class="btn btn-primary" data-magnet style="padding: 12px 20px">Explore all products <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FAQ ═══════════════════════ -->
+<section class="sec" id="faq" style="padding-top: 30px">
+  <div class="wrap">
+    <div class="faq-grid">
+      <div>
+        <span class="mono reveal">04 — questions</span>
+        <h2 class="reveal d1" style="font-size: clamp(34px, 4.6vw, 60px); line-height: 1.02; letter-spacing:-.025em; font-weight: 600; margin: 10px 0 18px; max-width: 18ch">
+          Frequently asked <span class="ital">questions.</span>
+        </h2>
+        <p class="reveal d2" style="color: var(--ink-2); max-width: 38ch; line-height: 1.6">
+          Can't find it? Our team replies in under 30 minutes during business hours.
+        </p>
+
+        <div class="faq-list reveal d3" style="margin-top: 30px">
+          <details class="faq" open>
+            <summary>What does NYX actually do?<span class="plus"></span></summary>
+            <div class="faq-body">NYX automates campaign planning, creative generation, launches, analytics, and optimization using autonomous AI agents — all from one connected workspace.</div>
+          </details>
+          <details class="faq">
+            <summary>Which platforms does NYX support?<span class="plus"></span></summary>
+            <div class="faq-body">Meta, Google, TikTok, LinkedIn, and other major advertising platforms — with new integrations rolling out continuously.</div>
+          </details>
+          <details class="faq">
+            <summary>Is NYX built for agencies or brands?<span class="plus"></span></summary>
+            <div class="faq-body">Both. NYX is designed for D2C brands, agencies, startups, and growth teams — anyone who wants to scale marketing faster.</div>
+          </details>
+          <details class="faq">
+            <summary>Can NYX generate creatives?<span class="plus"></span></summary>
+            <div class="faq-body">Yes. NYX generates image ads, videos, UGC creatives, and product visuals using AI — in minutes, not weeks.</div>
+          </details>
+          <details class="faq">
+            <summary>Do I need marketing experience?<span class="plus"></span></summary>
+            <div class="faq-body">No. NYX simplifies complex campaign workflows using conversational AI and automation — your team focuses on strategy, NYX handles execution.</div>
+          </details>
+        </div>
+      </div>
+
+      <div class="faq-cta reveal d2">
+        <span class="mono" style="color: #b8b6ad">need a hand?</span>
+        <h3>Book 20 minutes with a growth strategist.</h3>
+        <p>Walk through your ad accounts with someone who's scaled brands on NYX. We'll sketch the playbook on the call.</p>
+        <div class="stack" style="margin-bottom: 18px">
+          <span style="background:#7c4dff">JK</span>
+          <span style="background:#1aa05d">RM</span>
+          <span style="background:#e8a92e">SP</span>
+          <span style="background:#444">+4</span>
+        </div>
+        <a href="#" class="btn btn-accent">Book a Demo <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FINAL CTA ═══════════════════════ -->
+<section class="final">
+  <div class="wrap">
+    <span class="mono reveal">05 — let's go</span>
+    <h2 class="reveal d1">Your marketing—<br/>fully <span class="ital">autonomous.</span></h2>
+    <p class="reveal d2">Every campaign planned. Every creative generated. Every result optimized. All inside NYX.</p>
+    <div class="reveal d3" style="display:inline-flex; gap: 10px">
+      <a class="btn btn-accent" href="#" style="padding: 14px 22px; font-size: 15px" data-magnet>Book a Demo <span aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="#" style="padding: 14px 18px; font-size: 14px">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#">
+          <span class="brand-mark"></span>
+          <span>NYX</span>
+        </a>
+        <p class="brand-blurb">Autonomous AI agents for campaigns, creatives, analytics, and growth.</p>
+      </div>
+      <div>
+        <h5>Products</h5>
+        <ul>
+          <li><a href="#">CamPulse AI</a></li>
+          <li><a href="#">Pixeo AI</a></li>
+          <li><a href="#">Xeno AI</a></li>
+          <li><a href="#">Neo AI</a></li>
+          <li><a href="#">Audit AI</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Solutions</h5>
+        <ul>
+          <li><a href="#">D2C Brands</a></li>
+          <li><a href="#">Agencies</a></li>
+          <li><a href="#">Startups</a></li>
+          <li><a href="#">Growth Teams</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Customers</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 NYX AI, INC.</span>
+      <span>Microsoft Startups · NVIDIA · Product Hunt</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ═══════════ Reveal on scroll ═══════════ */
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ═══════════ Counters (animate when stage is visible) ═══════════ */
+  const counters = document.querySelectorAll('[data-counter]');
+  const cio = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      const el = e.target;
+      const target = +el.dataset.counter;
+      const start = performance.now();
+      const dur = 1400;
+      const fmt = (n) => n.toLocaleString();
+      const tick = (t) => {
+        const p = Math.min(1, (t - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      cio.unobserve(el);
+    }
+  }, { threshold: .4 });
+  counters.forEach(c => cio.observe(c));
+
+  /* ═══════════ Hero 3D stage — parallax to mouse + scroll ═══════════ */
+  const stage = document.getElementById('stage');
+  const stageInner = document.getElementById('stageInner');
+  let mx = 0, my = 0, tx = 0, ty = 0;
+  let scrollPhase = 0;
+
+  function onMouse(e){
+    const r = stage.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
+    mx = (e.clientX - cx) / r.width;
+    my = (e.clientY - cy) / r.height;
+  }
+  window.addEventListener('mousemove', onMouse, { passive: true });
+  window.addEventListener('scroll', () => {
+    const r = stage.getBoundingClientRect();
+    const center = r.top + r.height / 2;
+    const vh = window.innerHeight;
+    scrollPhase = (vh / 2 - center) / vh; // -1..1 ish
+  }, { passive: true });
+
+  function loop(){
+    tx += (mx - tx) * 0.06;
+    ty += (my - ty) * 0.06;
+    const rotY = tx * 8;       // deg
+    const rotX = -ty * 6 + scrollPhase * 4;
+    const trZ = -scrollPhase * 30;
+    if (stageInner) {
+      stageInner.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(${trZ}px)`;
+    }
+    // floats get extra parallax based on data-depth
+    document.querySelectorAll('.float').forEach(f => {
+      const d = +f.dataset.depth || 40;
+      const px = -tx * d * 0.6;
+      const py = -ty * d * 0.6;
+      const baseTransform = f.style.getPropertyValue('--base') || '';
+      f.style.transform = `translate3d(${px}px, ${py}px, ${d}px) ${f.dataset.rot || ''}`;
+    });
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  /* preserve floating cards' rotation defined in CSS via inline rotate */
+  document.querySelectorAll('.float').forEach(f => {
+    const cs = getComputedStyle(f);
+    // pull the rotation from class
+    const rotMap = { f1: 'rotate(-4deg)', f2: 'rotate(3deg)', f3: 'rotate(-2deg)', f4: 'rotate(4deg)' };
+    for (const k of Object.keys(rotMap)) if (f.classList.contains(k)) f.dataset.rot = rotMap[k];
+  });
+
+  /* ═══════════ Tilt cards ═══════════ */
+  document.querySelectorAll('.card.tilt').forEach(card => {
+    let raf;
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.style.transform = `perspective(900px) rotateX(${ -y * 6 }deg) rotateY(${ x * 8 }deg) translateZ(0)`;
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  /* ═══════════ Magnetic buttons ═══════════ */
+  document.querySelectorAll('[data-magnet]').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width / 2) * 0.25;
+      const y = (e.clientY - r.top - r.height / 2) * 0.35;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = '' });
+  });
+
+  /* ═══════════ Pricing toggle ═══════════ */
+  const billBtns = document.querySelectorAll('.bill');
+  billBtns.forEach(b => b.addEventListener('click', () => {
+    billBtns.forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    const mode = b.dataset.bill; // 'm' | 'y'
+    document.querySelectorAll('[data-price-m]').forEach(el => {
+      const m = el.dataset.priceM, y = el.dataset.priceY;
+      el.textContent = mode === 'm' ? `$${m}` : `$${y}`;
+    });
+    document.querySelectorAll('[data-strike-m]').forEach(el => {
+      const m = el.dataset.strikeM, y = el.dataset.strikeY;
+      const v = mode === 'm' ? m : y;
+      el.textContent = v;
+      el.style.display = v ? '' : 'none';
+    });
+  }));
+
+  /* ═══════════ Orb parallax on scroll (subtle) ═══════════ */
+  const orb = document.querySelector('.orb-wrap');
+  if (orb) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      orb.style.transform = `translate3d(0, ${y * 0.2}px, 0)`;
+    }, { passive: true });
+  }
+
+</script>
+
+</body>
+</html>
